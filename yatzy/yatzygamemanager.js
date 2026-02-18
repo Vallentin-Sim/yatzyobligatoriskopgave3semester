@@ -1,8 +1,8 @@
 // Yatzy Dice Logik
-let diceValues[] = [0, 0, 0, 0, 0];
-let diceHeld[] = [false, false, false, false, false];
+let diceValues = [0, 0, 0, 0, 0];
+let diceHeld = [false, false, false, false, false];
 let throwCount = 0;
-let random = new Random();
+let random = Math;
 
 function rollDice() {
     for (let i = 0; i < 5; i++) {
