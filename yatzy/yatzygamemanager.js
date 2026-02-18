@@ -2,12 +2,12 @@
 let diceValues = [0, 0, 0, 0, 0];
 let diceHeld = [false, false, false, false, false];
 let throwCount = 0;
-let random = Math;
+let random = Math.random;
 
 function rollDice() {
     for (let i = 0; i < 5; i++) {
         if (!diceHeld[i]) {
-            diceValues[i] = random.nextInt(1,7);
+            diceValues[i] = Math.floor(random() * 6) + 1;
         }
     }
 }
