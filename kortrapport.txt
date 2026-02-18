@@ -1,3 +1,23 @@
-TODO Liste;
+- CSS 
+Grid til at holde det hele 
+rød farve på held id class 
+grøn farve på used id 
+- 
+spinny dice når man trow diec
 
-HTML
+- HTML
+Alle tags hearkisk 
+
+- JS 
+Selve spillet 
+
+
+
+
+
+
+
+
+
+
+
