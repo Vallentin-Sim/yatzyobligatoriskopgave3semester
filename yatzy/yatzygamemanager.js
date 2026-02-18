@@ -7,11 +7,10 @@ console.log(die.frequency());
 console.log(die.largeStraightPoints());
 
 
+console.log(document.body);
+console.log(document.querySelector(".numberItem"));
 
-
-const tidNode = document.querySelector("#ones")
-console.log(tidNode);
-console.log(tidNode.textContent.value);
+console.log(document.querySelector("div"));
   
 
 
