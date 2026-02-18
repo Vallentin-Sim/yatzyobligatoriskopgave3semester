@@ -26,13 +26,43 @@ body {
     justify-content: center;
 }
 
+#tablePartBox {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+}
+
 #tableNumbersBox {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 5px;
 }
 
 .numberItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#tableMiscBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+}
+
+#BonusBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.scoringBoxItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.scoringItem {
     display: flex;
     flex-direction: column;
     gap: 5px;
