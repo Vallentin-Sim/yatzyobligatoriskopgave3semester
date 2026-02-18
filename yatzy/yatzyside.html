@@ -19,7 +19,7 @@
             </div>
             <div id = "ThrowBox">
                 <p >ThrowCount</p>
-                <textarea id = "ThrowCount">0</textarea>
+                <textarea id = "ThrowCount" readonly>0</textarea>
                 <button id="throwDice" onclick="throwThemDice()">ThrowDices</button>
             </div>
         </div>
@@ -50,6 +50,16 @@
                     <textarea name="6'er" id="sixes"></textarea>
                 </div>
             </div>
+            <div id = "BonusBox">
+            <div class = "scoringBoxItem">
+                <p>Bonus</p>
+                <textarea name="Bonus" id="Bonus"></textarea>
+            </div>
+             <div class = "scoringBoxItem">
+                <p>Sum</p>
+                <textarea name="Sum" id="Sum"></textarea>
+             </div>
+        </div>
             <div id = "tableMiscBox">
                 <div class = "scoringItem">
                     <p>1 pair</p>
@@ -88,16 +98,6 @@
                     <textarea name="Yatzy" id="Yatzy"></textarea>
                 </div>
             </div>
-        </div>
-        <div id = "BonusBox">
-            <div class = "scoringBoxItem">
-                <p>Bonus</p>
-                <textarea name="Bonus" id="Bonus"></textarea>
-            </div>
-             <div class = "scoringBoxItem">
-                <p>Sum</p>
-                <textarea name="Sum" id="Sum"></textarea>
-             </div>
         </div>
         <div id = "scoringBox">
             <p>Score</p>

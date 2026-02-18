@@ -22,8 +22,33 @@ body {
 
 #diceBox {
     display:flex;
-    gap: 5px;
+    gap: 10px;
     justify-content: center;
+}
+
+#diceBox p {
+    cursor: pointer;
+    user-select: none; /* Prevent text selection on click */
+    padding: 6px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 50px;
+    text-align: center;
+    background-color: beige;
+}
+
+#diceBox p.held {
+    background: beige;
+    border-color: red;
+}
+
+#ThrowCount {
+    width: 70px;
+    height: 30px;
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 4px;
 }
 
 #tablePartBox {
@@ -66,6 +91,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+textarea.locked{
+    background-color: lightgray;
+    border: 2px solid gray;
+    color: darkgray;
+    opacity: 0.95;
 }
 
 li {
