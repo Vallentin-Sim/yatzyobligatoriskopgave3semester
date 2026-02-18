@@ -1,6 +1,7 @@
 // Yatzy Dice Logik
 let diceValues[] = [0, 0, 0, 0, 0];
 let diceHeld[] = [false, false, false, false, false];
+let throwCount = 0;
 let random = new Random();
 
 function rollDice() {
@@ -16,6 +17,22 @@ function holdDie(index) {
         diceHeld[index] = !diceHeld[index];
     }
 }
+
+function getDiceValues() {
+    return diceValues;
+}
+
+function resetDice() {
+    for (let i = 0; i < 5; i++) {
+        diceValues[i] = 0;
+        diceHeld[i] = false;
+    }
+}
+
+function getThrowCount() {
+    return throwCount;
+}
+
 
 
 // Yatzy GUI Logik
