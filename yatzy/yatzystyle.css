@@ -1,6 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing : border-box;
+    font-family : Arial , sans-serif;
+}
 
+body {
+    background: linear-gradient(135deg, brown 0%, beige 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    padding: 20px;
+}
 
+#borderBox{
+    border: 2px solid black;
+    padding: 5px;
+    background: linear-gradient(135deg, beige 0%, brown 100%)
+}
 
+#diceBox {
+    display:flex;
+    gap: 5px;
+    justify-content: center;
+}
 
 li {
     color: beige;
