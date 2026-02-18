@@ -1,8 +1,8 @@
 - CSS 
 Simons Liste;
-Fix låse vilkår for scoring
-Fix transference af farve
-Fix Bonus og Sum position så det passer med hvad Ruben sagde. Det skal stå efter vores tal (1'ere osv.).
+Fix låse vilkår for scoring *OK
+Fix transference af farve * OK
+Fix Bonus og Sum * OK
 - 
 
 - HTML
@@ -10,6 +10,10 @@ Alle tags hearkisk
 
 - JS 
 Selve spillet 
+Simons Liste;
+
+implementere låse logik for dice * OK
+implementere Bonus, Sum og Score calculator logik * OK
 
 
 
