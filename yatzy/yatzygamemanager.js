@@ -2,12 +2,15 @@ let die = createDice()
 
 die.throwDice()
 console.log(die.values);
-console.log(die.chancePoints);
-console.log(die.frequency);
-  console.log(hello);
+console.log(die.chancePoints());
+console.log(die.frequency());
+console.log(die.largeStraightPoints());
   
+
+
   
-  function createDice (){
+// make dice logic   
+    function createDice (){
 
 let dice = {}
  
@@ -23,33 +26,30 @@ let dice = {}
     dice.holdStatus = [false,false,false,false,false]
 
 
-    dice.frequencyArr = [0,0,0,0,0,0];
+    dice.frequency = [0,0,0,0,0,0];
 
     
 
     /**
      * Reset the throw count.
      */
-    function resetThrowCount() {
+     // to do
+    dice.resetThrowCount = function() {
         throwCount = 0;
         resetHoldStatus;
     }
 
-    dice.resetThrowCount()
-    /**
-     * Roll the 5 dice. Only roll dice that are not hold.<br/>
-     * Note: holdStatus[i] is true, if die number i is hold (for i in [0..4]).
-     */
-    function throwDice() {
-        throwCount++;
-        for (let i =0;i<values.length;i++){
-            if (!holdStatus[i]) {
-                values[i] = Math.round(Math.random()*5)+1;
+    
+     dice.throwDice=function() {
+        dice.throwCount++;
+        for (let i =0;i<dice.values.length;i++){
+            if (!dice.holdStatus[i]) {
+                dice.values[i] = Math.round(Math.random()*5)+1;
             }
         }
     }
 
-    dice.threeDice()
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -58,24 +58,24 @@ let dice = {}
      * Note: This is an optional method. Comment this method out,<br/>
      * if you don't use it.
      */
-    function getResults() {
+     dice.getResult=function() {
         let results = []
         for (let i = 0; i <= 5; i++) {
             results[i] = this.sameValuePoints(i+1);
         }
-        results[6] = this.onePairPoints();
-        results[7] = this.twoPairPoints();
-        results[8] = this.threeSamePoints();
-        results[9] = this.fourSamePoints();
-        results[10] = this.fullHousePoints();
-        results[11] = this.smallStraightPoints();
-        results[12] = this.largeStraightPoints();
-        results[13] = this.chancePoints();
-        results[14] = this.yatzyPoints();
+        results[6] = dice.onePairPoints();
+        results[7] = dice.twoPairPoints();
+        results[8] = dice.threeSamePoints();
+        results[9] = dice.fourSamePoints();
+        results[10] = dice.fullHousePoints();
+        results[11] = dice.smallStraightPoints();
+        results[12] = dice.largeStraightPoints();
+        results[13] = dice.chancePoints();
+        results[14] = dice.yatzyPoints();
 
         return results;
     }
-    dice.getResults()
+    
 
     // -------------------------------------------------------------------------
 
@@ -87,40 +87,40 @@ let dice = {}
    
         
     
-    function frequency() {
+     dice.frequency=function() {
         frequencyArr=[0,0,0,0,0,0]
-        for (const value in values) {
+        for (const value in dice.values) {
             frequencyArr[value]+=1;
         }
         return frequencyArr
     }
-    dice.frequency()
+    
 
     /**
      * Return same-value points for the given face value.<br/>
      * Returns 0, if no dice has the given face value.<br/>
      * Pre: 1 <= value <= 6.
      */
-    function sameValuePoints(value) {
-        frequency() ;
+     dice.sameValuepoint=function(value) {
+        dice.frequency() ;
         return frequency[value]*value;
     }
-dice.sameValuePoints()
+
     /**
      * Return points for one pair (for the face value giving the highest points).<br/>
      * Return 0, if there aren't 2 dice with the same face value.
      */
-    function onePairPoints() {
+     dice.onePairPoints=function() {
         let num=0;
-        frequency();
-        for (let i=1;i<frequency.length;i++){
+        dice.frequency();
+        for (let i=1;i<dice.frequency.length;i++){
         if (frequency[i]>=2){
             num=i*2;
         }
         }
         return num;
     }
-dice.onePairPoints()
+
 
     /**
      * Return points for two pairs<br/>
@@ -128,12 +128,12 @@ dice.onePairPoints()
      * Return 0, if there aren't 2 dice with the same face value<br/>
      * and 2 other dice with the same but different face value.
      */
-    function twoPairPoints() {
+     dice.twoPairPoints=function() {
         frequency();
         let num=0;
         let pairs=0;
-        for (let i=0;i<frequency.length;i++){
-            if (frequency[i]>1&&frequency[i]<4){
+        for (let i=0;i<dice.frequency.length;i++){
+            if (dice.frequency[i]>1&&dice.frequency[i]<4){
                 num+=i*2;
                 pairs++;
             }
@@ -143,54 +143,54 @@ dice.onePairPoints()
         }
         return num;
     }
-dice.twoPairPoints()
+
     /**
      * Return points for 3 of a kind.<br/>
      * Return 0, if there aren't 3 dice with the same face value.
      */
-    function threeSamePoints() {
+     dice.threeSamePoints=function() {
         frequency();
         let num=0;
-        for (let i=1;i<frequency.length;i++){
-            if (frequency[i] >= 3){
+        for (let i=1;i<dice.frequency.length;i++){
+            if (dice.frequency[i] >= 3){
                 num=i*3;
             }
         }
         return num;
     }
-    dice.threeSamePoints()
+    
 
     /**
      * Return points for 4 of a kind.<br/>
      * Return 0, if there aren't 4 dice with the same face value.
      */
-    function fourSamePoints() {
+     dice.fourSamePoints=function() {
         frequency();
         let num=0;
-        for (let i=1;i<frequency.length;i++){
-            if (frequency[i] >= 4){
+        for (let i=1;i<dice.frequency.length;i++){
+            if (dice.frequency[i] >= 4){
                 num=i*4;
             }
         }
         return num;
     }
-    dice.fourSamePoints()
+   
 
     /**
      * Return points for full house.<br/>
      * Return 0, if there aren't 3 dice with the same face value<br/>
      * and 2 other dice with the same but different face value.
      */
-function fullHousePoints() {
+ dice.fullHousePoints=function() {
         // TODO
         frequency();
         let threeDice = 0;
         let twoDice = 0;
         let num = 0;
-        for (let i = 0; i < frequency.length; i++) {
-            if (frequency[i] == 3) {
+        for (let i = 0; i < dice.frequency.length; i++) {
+            if (dice.frequency[i] == 3) {
                 threeDice = i;
-            } else if (frequency[i] == 2) {
+            } else if (dice.frequency[i] == 2) {
                 twoDice = i;
             }
         }
@@ -199,17 +199,17 @@ function fullHousePoints() {
         }
         return num;
     }
-    dice.fullHousePoints()
+ 
 
     /**
      * Return points for small straight.<br/>
      * Return 0, if the dice aren't showing 1,2,3,4,5.
      */
-function smallStraightPoints() {
+ dice.smallStraightPoints=function() {
         frequency();
         let num=0;
-        for (let i=1;i<frequency.length-1;i++){
-            if (frequency[i]==1){
+        for (let i=1;i<dice.frequency.length-1;i++){
+            if (dice.frequency[i]==1){
                 num++;
             }
         }
@@ -222,16 +222,16 @@ function smallStraightPoints() {
         return num;
     }
 
-    dice.smallStraightPoints()
+    
     /**
      * Return points for large straight.<br/>
      * Return 0, if the dice aren't showing 2,3,4,5,6.
      */
-    function largeStraightPoints() {
-        frequency();
+     dice.largeStraightPoints=function() {
+        dice.frequency();
         let num=0;
-        for (let i=2;i<frequency.length;i++){
-            if (frequency[i]==1){
+        for (let i=2;i<dice.frequency.length;i++){
+            if (dice.frequency[i]==1){
                 num++;
             }
         }
@@ -244,25 +244,25 @@ function smallStraightPoints() {
         return num;
     }
 
-    dice.largeStraightPoints()
+    
     /**
      * Return points for chance (the sum of face values).
      */
-    function chancePoints() {
+     dice.chancePoints=function() {
         let num=0;
-        for (const value of values) {
+        for (const value of dice.values) {
             num+=value
         }
         return num;
     }
 
-    dice.chancePoints()
+
     /**
      * Return points for yatzy (50 points).<br/>
      * Return 0, if there aren't 5 dice with the same face value.
      */
-    function yatzyPoints() {
-        frequency();
+     dice.yatzyPoints=function() {
+        dice.frequency();
         let num=0;
         for (let i=1;i<frequency.length;i++){
             if (frequency[i] == 5){
@@ -271,16 +271,15 @@ function smallStraightPoints() {
         }
         return num;
     }
-    dice.yatzyPoints()
+    
 
-    function resetHoldStatus(){
+     dice.resetHoldStatus=function(){
 
-holdStatus=[false,false,false,false,false]
+dice.holdStatus=[false,false,false,false,false]
 return holdStatus
 
     }
-    dice.resetHoldStatus()
-
+    
 
     return dice
      }
