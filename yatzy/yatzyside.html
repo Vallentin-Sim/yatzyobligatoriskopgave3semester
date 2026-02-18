@@ -18,8 +18,8 @@
                 <p id = "die5">Die temp</p> 
             </div>
             <div id = "ThrowBox">
-                <p id = "ThrowCount">ThrowCount</p>
-                <textarea>0</textarea>
+                <p >ThrowCount</p>
+                <textarea id = "ThrowCount">0</textarea>
                 <button id="throwDice" onclick="throwThemDice()">ThrowDices</button>
             </div>
         </div>
@@ -27,45 +27,45 @@
             <div id = "tableNumbersBox">
                 <div class = "numberItem">
                     <p>1'er</p>
-                    <textarea name="1'er" id="1'er"></textarea>
+                    <textarea name="1'er" id="ones"></textarea>
                 </div>
                 <div class = "numberItem">
                     <p>2'er</p>
-                    <textarea name="2'er" id="2'er"></textarea>
+                    <textarea name="2'er" id="twos"></textarea>
                 </div>
                 <div class = "numberItem">
                     <p>3'er</p>
-                    <textarea name="3'er" id="3'er"></textarea>
+                    <textarea name="3'er" id="threes"></textarea>
                 </div>
                 <div class = "numberItem">
                     <p>4'er</p>
-                    <textarea name="4'er" id="4'er"></textarea>
+                    <textarea name="4'er" id="fours"></textarea>
                 </div>
                 <div class = "numberItem">
                     <p>5'er</p>
-                    <textarea name="5'er" id="5'er"></textarea>
+                    <textarea name="5'er" id="fives"></textarea>
                 </div>
                 <div class = "numberItem">
                     <p>6'er</p>
-                    <textarea name="6'er" id="6'er"></textarea>
+                    <textarea name="6'er" id="sixes"></textarea>
                 </div>
             </div>
             <div id = "tableMiscBox">
                 <div class = "scoringItem">
                     <p>1 pair</p>
-                    <textarea name="1 pair" id="1 pair"></textarea>
+                    <textarea name="1 pair" id="pair"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>2 pair</p>
-                    <textarea name="2 pair" id="2 pair"></textarea>
+                    <textarea name="2 pair" id="twoPair"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>3 of a kind</p>
-                    <textarea name="3 of a kind" id="3 of a kind"></textarea>
+                    <textarea name="3 of a kind" id="treeOfAkind"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>4 of a kind</p>
-                    <textarea name="4 of a kind" id="4 of a kind"></textarea>
+                    <textarea name="4 of a kind" id="fourOfAKind"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>Fullhouse</p>
@@ -73,11 +73,11 @@
                 </div>
                 <div class = "scoringItem">
                     <p>Small Straight</p>
-                    <textarea name="small Straight" id="small straight"></textarea>
+                    <textarea name="small Straight" id="smallStraight"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>Big Straight</p>
-                    <textarea name="big Straight" id="big straight"></textarea>
+                    <textarea name="big Straight" id="bigStraight"></textarea>
                 </div>
                 <div class = "scoringItem">
                     <p>Chance</p>
@@ -102,6 +102,7 @@
         <div id = "scoringBox">
             <p>Score</p>
             <textarea name="Score" id="Score"></textarea>
+            <button id="Restart" onclick="restart()">Restart</button>
         </div>
     </div>   
 </body>
