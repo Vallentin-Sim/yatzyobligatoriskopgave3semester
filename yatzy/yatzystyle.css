@@ -26,6 +26,18 @@ body {
     justify-content: center;
 }
 
+#tableNumbersBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.numberItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 li {
     color: beige;
 }
