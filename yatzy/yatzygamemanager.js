@@ -12,7 +12,33 @@ console.log(document.querySelector(".numberItem"));
 
 console.log(document.querySelector("div"));
   
+// throwdice 
+let buttonThrow = document.querySelector("#throwDice")
 
+
+function throwThemDice(){
+    die.throwDice()
+    let dBox = document.querySelector("#diceBox")
+    let para = document.querySelectorAll("p")
+    for (const key in dBox.childNodes) {
+        para[key].textContent = die.values[key]
+    }
+    updateTabel()
+}
+
+function updateTabel(){
+    let chancePoint = document.querySelector("#Chance")
+    chancePoint.textContent = die.chancePoints().toString()
+
+    let onesPoint = document.querySelector("#ones")
+
+
+
+
+
+
+
+}
 
   
 // make dice logic   
