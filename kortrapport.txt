@@ -1,9 +1,10 @@
 - CSS 
-Grid til at holde det hele 
-rød farve på held id class 
-grøn farve på used id 
+Simons Liste;
+Fix låse vilkår for scoring
+Fix transference af farve
+Fix Bonus og Sum position så det passer med hvad Ruben sagde. Det skal stå efter vores tal (1'ere osv.).
 - 
-spinny dice når man trow diec
+spinny dice når man trow diec ? Kan laves hvis vi har meget tid til overs.
 
 - HTML
 Alle tags hearkisk 
