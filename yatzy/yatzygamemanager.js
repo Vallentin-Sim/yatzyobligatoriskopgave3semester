@@ -5,6 +5,12 @@ console.log(die.values);
 console.log(die.chancePoints());
 console.log(die.frequency());
 console.log(die.largeStraightPoints());
+
+
+console.log(document.body);
+console.log(document.querySelector(".numberItem"));
+
+console.log(document.querySelector("div"));
   
 
 
@@ -26,7 +32,7 @@ let dice = {}
     dice.holdStatus = [false,false,false,false,false]
 
 
-    dice.frequency = [0,0,0,0,0,0];
+    dice.frequencyArr = [0,0,0,0,0,0];
 
     
 
@@ -88,11 +94,10 @@ let dice = {}
         
     
      dice.frequency=function() {
-        frequencyArr=[0,0,0,0,0,0]
-        for (const value in dice.values) {
-            frequencyArr[value]+=1;
+        for (let value of dice.values) {
+            dice.frequencyArr[value-1]+=1;
         }
-        return frequencyArr
+        return dice.frequencyArr
     }
     
 
