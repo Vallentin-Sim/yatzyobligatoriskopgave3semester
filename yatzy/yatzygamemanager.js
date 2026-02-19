@@ -21,6 +21,8 @@ dieEls.forEach((el, index) => {
     if (!el) return;
     el.style.cursor = "pointer";
     el.addEventListener("click", () => {
+        console.log(el.textContent)
+        if (el.textContent!="Die temp")
         die.holdStatus[index] = !die.holdStatus[index];
         el.classList.toggle("held", die.holdStatus[index])
     })
@@ -115,7 +117,8 @@ function lock(field){
     lockedFields[field] = !lockedFields[field]
     const el = fieldToElement[field]
     if (!el) return;
-    if(lockedFields[field]){
+
+    if(lockedFields[field]&&die.throwCount!=0){
         el.classList.add("locked")
         el.disabled = true;
 
@@ -144,6 +147,7 @@ function restart(){
     die.values = [0,0,0,0,0]
     die.holdStatus = [false,false,false,false,false]
     die.frequencyArr = [0,0,0,0,0,0];
+    die.throwCount =0
     // chancePoint.textContent = "0" --- Simon: prøver lige at ordne det så restart fungere med mine tilføjelser
     for (const key in fieldToElement) {
         const el = fieldToElement[key]

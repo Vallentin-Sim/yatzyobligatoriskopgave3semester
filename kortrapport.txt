@@ -13,6 +13,8 @@ Selve spillet
 Simons Liste;
 
 implementere låse logik for dice * OK
+man kan låse uden at man har et slag og man kan vælge et felt uden at havde et slag
+
 implementere Bonus, Sum og Score calculator logik * OK
 
 
