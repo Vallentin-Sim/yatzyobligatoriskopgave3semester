@@ -1,17 +1,259 @@
 let die = createDice()
 
-die.throwDice()
-console.log(die.values);
-console.log(die.chancePoints());
-console.log(die.frequency());
-console.log(die.largeStraightPoints());
+//die.throwDice() laver lidt problemer lige pt så det er kommenteret ud
+//console.log(die.values);
+//console.log(die.chancePoints());
+//console.log(die.frequency());
+//console.log(die.largeStraightPoints());
+
+// Laver lige nogle throw button og die elementer
+const throwBtn = document.querySelector("#throwDice");
+const dieEls = [
+    document.querySelector("#die1"),
+    document.querySelector("#die2"),
+    document.querySelector("#die3"),
+    document.querySelector("#die4"),
+    document.querySelector("#die5")
+]
+
+// click to hold adfærd
+dieEls.forEach((el, index) => {
+    if (!el) return;
+    el.style.cursor = "pointer";
+    el.addEventListener("click", () => {
+        console.log(el.textContent)
+        if (el.textContent!="Die temp")
+        die.holdStatus[index] = !die.holdStatus[index];
+        el.classList.toggle("held", die.holdStatus[index])
+    })
+})
+
+console.log(document.body);
+console.log(document.querySelector(".numberItem"));
+
+console.log(document.querySelector("div"));
+
+let lockedFields = {
+    chance: false, ones: false, twos: false, threes: false, fours: false, fives: false, sixes: false, pair: false, twoPair: false,
+    threeKind: false, fourKind: false, fullhouse: false, smallStraight: false, bigStraight: false, yatzy: false}
+
+let throwCounter = document.querySelector("#ThrowCount")
+let chancePoint = document.querySelector("#Chance")
+chancePoint.addEventListener("click", () => lock("chance"));
+let onesPoint = document.querySelector("#ones")
+onesPoint.addEventListener("click", () => lock("ones"));
+let twosPoint = document.querySelector("#twos")
+twosPoint.addEventListener("click", () => lock("twos"));
+let treesPoint = document.querySelector("#threes")
+treesPoint.addEventListener("click", () => lock("threes"));
+let foursPoint = document.querySelector("#fours")
+foursPoint.addEventListener("click", () => lock("fours"));
+let fivesPoint = document.querySelector("#fives")
+fivesPoint.addEventListener("click", () => lock("fives"));
+let sixesPoint = document.querySelector("#sixes")
+sixesPoint.addEventListener("click", () => lock("sixes"));
+let pairPoint = document.querySelector("#pair")
+pairPoint.addEventListener("click", () => lock("pair"));
+let twoPairPonit = document.querySelector("#twoPair")
+twoPairPonit.addEventListener("click", () => lock("twoPair"));
+let treeOfAKindPoint = document.querySelector("#treeOfAkind")
+treeOfAKindPoint.addEventListener("click", () => lock("threeKind"));
+let fourOfAKindPoint = document.querySelector("#fourOfAKind")
+fourOfAKindPoint.addEventListener("click", () => lock("fourKind"));
+let fullHousePoint = document.querySelector("#fullhouse")
+fullHousePoint.addEventListener("click", () => lock("fullhouse"));
+let smallStraightPoint = document.querySelector("#smallStraight")
+smallStraightPoint.addEventListener("click", () => lock("smallStraight"));
+let largeStraightPoint = document.querySelector("#bigStraight")
+largeStraightPoint.addEventListener("click", () => lock("bigStraight"));
+let yatzyPoint = document.querySelector("#Yatzy")
+yatzyPoint.addEventListener("click", () => lock("yatzy"));
+
+const fieldToElement = {
+    ones: onesPoint,
+    twos: twosPoint,
+    threes: treesPoint,
+    fours: foursPoint,
+    fives: fivesPoint,
+    sixes: sixesPoint,
+    pair: pairPoint,
+    twoPair: twoPairPonit,
+    threeKind: treeOfAKindPoint,
+    fourKind: fourOfAKindPoint,
+    fullhouse: fullHousePoint,
+    smallStraight: smallStraightPoint,
+    bigStraight: largeStraightPoint,
+    chance: chancePoint, 
+    yatzy: yatzyPoint
+}
+
+
+// throwdice 
+//let buttonThrow = document.querySelector("#throwDice")
+
+
+function throwThemDice(){
+    die.throwDice()
+    let para = document.querySelectorAll("#diceBox p")
+    for (let i = 0; i < die.values.length; i++) {
+        if (para[i]){
+            para[i].textContent = die.values[i]
+        }
+    }
+    updateTabel()
+
+    throwCounter.value = die.throwCount
+
+    // disable adfærd efter 3 kast
+    if (die.throwCount >= 3) {
+        throwBtn.disabled = true;
+    } else {
+        throwBtn.disabled = false;
+    }
+}
+
+// Tilføjet toggle lock state.
+function lock(field){
+    lockedFields[field] = !lockedFields[field]
+    const el = fieldToElement[field]
+    if (!el) return;
+
+    if(lockedFields[field]&&die.throwCount!=0){
+        el.classList.add("locked")
+        el.disabled = true;
+
+        die.values = [0,0,0,0,0]
+        die.throwCount = 0;
+        die.holdStatus = [false,false,false,false,false]
+        die.frequencyArr = [0,0,0,0,0,0];
+
+        dieEls.forEach((el) => {
+            if (!el) return
+            el.textContent = "Die temp"
+            el.classList.remove("held")
+        })
+
+        throwCounter.value = die.throwCount
+        throwBtn.disabled = false;
+        updateTabel();
+        calculateTotals();
+    } else {
+        el.classList.remove("locked")
+        el.disabled = false;
+    }
+}
+
+function restart(){
+    die.values = [0,0,0,0,0]
+    die.holdStatus = [false,false,false,false,false]
+    die.frequencyArr = [0,0,0,0,0,0];
+    die.throwCount =0
+    // chancePoint.textContent = "0" --- Simon: prøver lige at ordne det så restart fungere med mine tilføjelser
+    for (const key in fieldToElement) {
+        const el = fieldToElement[key]
+        if (!el) continue;
+        if (el.tagName==="TEXTAREA"){
+            el.value = "";
+        }
+        else el.textContent = "";
+        el.classList.remove("locked")
+        el.disabled = false;
+    }
+
+    dieEls.forEach((el) => {
+        if (!el) return
+        el.textContent = "Die temp"
+        el.classList.remove("held")
+    })
+
+    // Reset UI state
+    throwCounter.value = 0;
+    throwBtn.disabled = false;
+    unlockAll()
+    calculateTotals();
+}
+
+// Har tilføjet lidt extra for at sikre vi åbner for alle felter ved restart.
+function unlockAll() {
+    for (let key in lockedFields) {
+        lockedFields[key] = false;
+        const el = fieldToElement[key]
+        if (el) {
+            el.classList.remove("locked")
+            el.disabled = false;
+        }
+    }
+}
 
 
 
-console.log(die);
-  
+// Ændre lige alle textContent til value for textarea elementer. I kan bare ændre det tilbage igen.
+function updateTabel(){
+    if (!lockedFields.chance){
+    chancePoint.value = die.chancePoints()
+    }
+    if(!lockedFields.ones) onesPoint.value = die.sameValuepoint(1);
+    if(!lockedFields.twos) twosPoint.value = die.sameValuepoint(2)
+    if(!lockedFields.threes) treesPoint.value = die.sameValuepoint(3)
+    if(!lockedFields.fours) foursPoint.value = die.sameValuepoint(4)
+    if(!lockedFields.fives) fivesPoint.value = die.sameValuepoint(5)
+    if(!lockedFields.sixes) sixesPoint.value = die.sameValuepoint(6)
+    if(!lockedFields.pair) pairPoint.value = die.onePairPoints()
+    if(!lockedFields.twoPair) twoPairPonit.value = die.twoPairPoints()
+    if(!lockedFields.threeKind) treeOfAKindPoint.value = die.threeSamePoints()
+    if(!lockedFields.fourKind) fourOfAKindPoint.value = die.fourSamePoints()
+    if(!lockedFields.fullhouse) fullHousePoint.value = die.fullHousePoints()
+    if(!lockedFields.smallStraight) smallStraightPoint.value = die.smallStraightPoints()
+    if(!lockedFields.bigStraight) largeStraightPoint.value = die.largeStraightPoints()
+    if(!lockedFields.yatzy) yatzyPoint.value = die.yatzyPoints()
 
+    throwCounter.value = die.throwCount
+}
 
+function calculateTotals() {
+    // Alle relevante keys
+    const allScoreKeys = [
+        'ones', 'twos', 'threes', 'fours', 'fives', 'sixes',
+        'pair', 'twoPair', 'threeKind', 'fourKind',
+        'fullhouse', 'smallStraight', 'bigStraight', 'chance', 'yatzy'
+    ];
+
+    let sum = 0;
+    allScoreKeys.forEach(key => {
+        if (lockedFields[key]) {
+            const el = fieldToElement[key];
+            if (el) {
+                const val = parseInt(el.value || el.textContent) || 0;
+                sum += val;
+            }
+        }
+    });
+
+    // Bonus: 50 hvis sum af 1-6 >= 63
+    const numberKeys = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+    let numberSum = 0;
+    numberKeys.forEach(key => {
+        if (lockedFields[key]) {
+            const el = fieldToElement[key];
+            if (el) {
+                const val = parseInt(el.value || el.textContent) || 0;
+                numberSum += val;
+            }
+        }
+    });
+
+    const bonus = (numberSum >= 63) ? 50 : 0;
+    const total = sum + bonus;
+
+    // Opdater felterne
+    const sumEl = document.querySelector("#Sum");
+    const bonusEl = document.querySelector("#Bonus");
+    const scoreEl = document.querySelector("#Score");
+
+    if (sumEl) sumEl.value = sum;
+    if (bonusEl) bonusEl.value = bonus;
+    if (scoreEl) scoreEl.value = total;
+}
   
 // make dice logic   
     function createDice (){
@@ -39,8 +281,8 @@ let dice = {}
      */
      // to do
     dice.resetThrowCount = function() {
-        throwCount = 0;
-        resetHoldStatus;
+        dice.throwCount = 0;
+        dice.resetHoldStatus();
     }
 
     
@@ -92,6 +334,7 @@ let dice = {}
         
     
      dice.frequency=function() {
+        dice.frequencyArr = [0,0,0,0,0,0]
         for (let value of dice.values) {
             dice.frequencyArr[value-1]+=1;
         }
@@ -106,7 +349,7 @@ let dice = {}
      */
      dice.sameValuepoint=function(value) {
         dice.frequency() ;
-        return frequency[value]*value;
+        return dice.frequencyArr[value-1]*value;
     }
 
     /**
@@ -116,9 +359,9 @@ let dice = {}
      dice.onePairPoints=function() {
         let num=0;
         dice.frequency();
-        for (let i=1;i<dice.frequency.length;i++){
-        if (frequency[i]>=2){
-            num=i*2;
+        for (let i=1;i<dice.frequencyArr.length;i++){
+        if (this.frequencyArr[i]>=2){
+            num=(i+1)*2;
         }
         }
         return num;
@@ -132,12 +375,12 @@ let dice = {}
      * and 2 other dice with the same but different face value.
      */
      dice.twoPairPoints=function() {
-        frequency();
+        dice.frequency();
         let num=0;
         let pairs=0;
-        for (let i=0;i<dice.frequency.length;i++){
-            if (dice.frequency[i]>1&&dice.frequency[i]<4){
-                num+=i*2;
+        for (let i=0;i<dice.frequencyArr.length;i++){
+            if (dice.frequencyArr[i]>1&&dice.frequencyArr[i]<4){
+                num+=(i+1)*2;
                 pairs++;
             }
         }
@@ -152,11 +395,11 @@ let dice = {}
      * Return 0, if there aren't 3 dice with the same face value.
      */
      dice.threeSamePoints=function() {
-        frequency();
+        dice.frequency();
         let num=0;
-        for (let i=1;i<dice.frequency.length;i++){
-            if (dice.frequency[i] >= 3){
-                num=i*3;
+        for (let i=1;i<dice.frequencyArr.length;i++){
+            if (dice.frequencyArr[i] >= 3){
+                num=(i+1)*3;
             }
         }
         return num;
@@ -168,11 +411,11 @@ let dice = {}
      * Return 0, if there aren't 4 dice with the same face value.
      */
      dice.fourSamePoints=function() {
-        frequency();
+        dice.frequency();
         let num=0;
-        for (let i=1;i<dice.frequency.length;i++){
-            if (dice.frequency[i] >= 4){
-                num=i*4;
+        for (let i=1;i<dice.frequencyArr.length;i++){
+            if (dice.frequencyArr[i] >= 4){
+                num=(i+1)*4;
             }
         }
         return num;
@@ -185,16 +428,15 @@ let dice = {}
      * and 2 other dice with the same but different face value.
      */
  dice.fullHousePoints=function() {
-        // TODO
-        frequency();
+        dice.frequency();
         let threeDice = 0;
         let twoDice = 0;
         let num = 0;
-        for (let i = 0; i < dice.frequency.length; i++) {
-            if (dice.frequency[i] == 3) {
-                threeDice = i;
-            } else if (dice.frequency[i] == 2) {
-                twoDice = i;
+        for (let i = 0; i < dice.frequencyArr.length; i++) {
+            if (dice.frequencyArr[i] == 3) {
+                threeDice = i+1;
+            } else if (dice.frequencyArr[i] == 2) {
+                twoDice = i+1;
             }
         }
         if (threeDice > 0 && twoDice > 0) {
@@ -209,10 +451,10 @@ let dice = {}
      * Return 0, if the dice aren't showing 1,2,3,4,5.
      */
  dice.smallStraightPoints=function() {
-        frequency();
+        dice.frequency();
         let num=0;
-        for (let i=1;i<dice.frequency.length-1;i++){
-            if (dice.frequency[i]==1){
+        for (let i=0;i<dice.frequencyArr.length-1;i++){
+            if (dice.frequencyArr[i]==1){
                 num++;
             }
         }
@@ -233,8 +475,8 @@ let dice = {}
      dice.largeStraightPoints=function() {
         dice.frequency();
         let num=0;
-        for (let i=2;i<dice.frequency.length;i++){
-            if (dice.frequency[i]==1){
+        for (let i=1;i<dice.frequencyArr.length;i++){
+            if (dice.frequencyArr[i]==1){
                 num++;
             }
         }
@@ -267,8 +509,8 @@ let dice = {}
      dice.yatzyPoints=function() {
         dice.frequency();
         let num=0;
-        for (let i=1;i<frequency.length;i++){
-            if (frequency[i] == 5){
+        for (let i=1;i<this.frequencyArr.length;i++){
+            if (this.frequencyArr[i] === 5){
                 num = 50;
             }
         }
@@ -276,25 +518,16 @@ let dice = {}
     }
     
 
-     dice.resetHoldStatus=function(){
-
-dice.holdStatus=[false,false,false,false,false]
-return holdStatus
-
-    }
+dice.resetHoldStatus = function() {
+    dice.holdStatus = [false,false,false,false,false];
+}
     
 
     return dice
      }
-
-
-
-
-
-
-
-
-
 // Yatzy GUI Logik
 
 // Yatzy Game Manager / Scorings Logik
+
+// sætter spillet op 
+restart()

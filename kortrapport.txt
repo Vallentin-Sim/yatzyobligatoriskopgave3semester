@@ -1,15 +1,21 @@
 - CSS 
-Grid til at holde det hele 
-rød farve på held id class 
-grøn farve på used id 
+Simons Liste;
+Fix låse vilkår for scoring *OK
+Fix transference af farve * OK
+Fix Bonus og Sum * OK
 - 
-spinny dice når man trow diec
 
 - HTML
 Alle tags hearkisk 
 
 - JS 
 Selve spillet 
+Simons Liste;
+
+implementere låse logik for dice * OK
+man kan låse uden at man har et slag og man kan vælge et felt uden at havde et slag
+
+implementere Bonus, Sum og Score calculator logik * OK
 
 
 
