@@ -88,6 +88,9 @@ const fieldToElement = {
 }
 
 
+const textareas = document.querySelectorAll("textarea");
+textareas.forEach((textarea) => (textarea.readOnly = true));
+
 // throwdice 
 //let buttonThrow = document.querySelector("#throwDice")
 
@@ -250,7 +253,7 @@ function calculateTotals() {
     const bonusEl = document.querySelector("#Bonus");
     const scoreEl = document.querySelector("#Score");
 
-    if (sumEl) sumEl.value = sum;
+    if (sumEl) sumEl.value = numberSum;
     if (bonusEl) bonusEl.value = bonus;
     if (scoreEl) scoreEl.value = total;
 }
@@ -290,7 +293,7 @@ let dice = {}
         dice.throwCount++;
         for (let i =0;i<dice.values.length;i++){
             if (!dice.holdStatus[i]) {
-                dice.values[i] = Math.round(Math.random()*5)+1;
+                dice.values[i] = Math.floor(Math.random()*6+1);
             }
         }
     }
