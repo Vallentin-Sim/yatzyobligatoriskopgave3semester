@@ -7,10 +7,8 @@ console.log(die.frequency());
 console.log(die.largeStraightPoints());
 
 
-console.log(document.body);
-console.log(document.querySelector(".numberItem"));
 
-console.log(document.querySelector("div"));
+console.log(die);
   
 
 
